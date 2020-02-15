@@ -1,3 +1,6 @@
+import java.security.SecureRandom;
+import java.util.Scanner;
+
 /*
  * The program shall generate random numbers with a SecureRandom object
 The program shall ask the student to solve a multiplication problem
@@ -14,11 +17,70 @@ Create a method called "displayCorrectResponse" that prints out the response whe
 Create a method called "displayInorrectResponse" that prints out the response when a student enters an incorrect answer
 Create a main method that runs your program by calling the "quiz" method
  */
+
+
 public class CAI1 {
 
+	private static SecureRandom rand = new SecureRandom();
+	static Scanner input = new Scanner(System.in);
+	//Generate the random numbers between 0 - 9
+	static int rand_val1 = rand.nextInt(10); 
+	static int rand_val2 = rand.nextInt(10);
+	
+	
+	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		quiz();
+		
 
 	}
+	
+	public static void quiz() {
+        //Send the numbers to be used in the question
+        askQuestion(rand_val1, rand_val2);
+        readResponse();
+        
+        
+	}
+	
 
+	
+	public static void askQuestion(int val1, int val2) {
+		System.out.println("What is " + val1 + " times " + val2);
+		
+	}
+	
+	public static void readResponse() {
+		int answer = input.nextInt();
+		
+		isAnserCorrect(answer);
+	}
+	
+	public static void isAnserCorrect(int val) {
+		while(val != (rand_val1 * rand_val2)) {
+			displayInorrectResponse();
+			repeatQuestion();
+		}
+		displayCorrectResponse();
+		System.exit(0);
+		
+		
+	}
+	
+	private static void repeatQuestion() {
+		System.out.println("What is " + rand_val1 + " times " + rand_val2);
+		readResponse();
+	}
+	
+	public static void displayCorrectResponse() {
+		System.out.println("Very good!");
+	}
+	
+	public static void displayInorrectResponse() {
+		System.out.println("No. Please try again.");
+	}
+	
 }
+
+
+
