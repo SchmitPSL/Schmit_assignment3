@@ -27,11 +27,10 @@ Create a main method that runs your program by calling the "quiz" method
 public class CAI3 {
 	private static SecureRandom rand = new SecureRandom();
 	static Scanner input = new Scanner(System.in);
-	// Generate the random numbers between 0 - 9
 	private static int rand_val1;
 	private static int rand_val2;
-	static int correct = 0;
-	static int incorrect = 0;
+	private static int correct;
+	private static int incorrect;
 
 	public static void main(String[] args) {
 		quiz();
@@ -41,6 +40,11 @@ public class CAI3 {
 	private static void setgenRandomNum() {
 		rand_val1 = rand.nextInt(10);
 		rand_val2 = rand.nextInt(10);
+	}
+	
+	private static void setCorrectIncorrect() {
+		correct = 0;
+		incorrect = 0;
 	}
 
 	private static int getgenRandomNum1() {
@@ -52,6 +56,7 @@ public class CAI3 {
 	}
 
 	public static void quiz() {
+		setCorrectIncorrect();
 		for(int i = 1; i <= 10; i++) {
 		System.out.println("Question " + i);
 		
@@ -129,7 +134,7 @@ public class CAI3 {
 	}
 
 	public static void displayCompletionMessage() {
-		double score = (correct / 10) * 100;
+		double score =(double)correct/10 * 100;
 		System.out.println("You got " + correct + " right and " + incorrect + " wrong.");
 		System.out.printf("Your score is %.0f%%\n", score);
 		if (score >= 75) {

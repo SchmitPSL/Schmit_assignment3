@@ -1,3 +1,6 @@
+import java.security.SecureRandom;
+import java.util.Scanner;
+
 /*
  * The program shall generate random numbers with a SecureRandom object
 The program shall ask the student to enter a difficulty level of 1, 2, 3, or 4
@@ -35,5 +38,227 @@ Create a method called "displayCompletionMessage" that prints out the studen't s
 Create a main method that runs your program by calling the "quiz" method
  */
 public class CAI5 {
+	private static SecureRandom rand = new SecureRandom();
+	static Scanner input = new Scanner(System.in);
+	private static int rand_val1;
+	private static int rand_val2;
+	private static int correct;
+	private static int incorrect;
+	private static int difficulty;
+	private static int problem;
+	public static void main(String[] args) {
+		quiz();
 
+	}
+
+	private static void setCorrectIncorrect() {
+		correct = 0;
+		incorrect = 0;
+	}
+
+	private static int getgenRandomNum1() {
+		return rand_val1;
+	}
+
+	private static int getgenRandomNum2() {
+		return rand_val2;
+	}
+
+	public static void quiz() {
+		setCorrectIncorrect();
+		System.out.println("Choose a difficulty for multiplication:\n"
+				+ "1. Numbers between 0 - 9\n"
+				+ "2. Numbers between 0 - 99\n"
+				+ "3. Numbers between 0 - 999\n"
+				+ "4. Numbers between 0 - 9999");
+		
+		readDifficulty();
+		System.out.println("Choose a what kind of problems:\n"
+				+ "1. Addition\n"
+				+ "2. Multiplication\n"
+				+ "3. Subtraction\n"
+				+ "4. Division\n"
+				+ "5. Mix of all 4");
+		readProblemType();
+		for(int i = 1; i <= 10; i++) {
+		System.out.println("Question " + i);
+		generateQuestionArgument();
+		askQuestion();
+		}
+		displayCompletionMessage();
+	}
+	
+	private static void readDifficulty() {
+		difficulty = input.nextInt();
+	}
+	
+	private static void readProblemType() {
+		problem = input.nextInt();
+	}
+	
+	private static void generateQuestionArgument(){
+		switch(difficulty) {
+		case 1:
+			rand_val1 = rand.nextInt(10);
+			rand_val2 = rand.nextInt(10);
+			break;
+		case 2:
+			rand_val1 = rand.nextInt(100);
+			rand_val2 = rand.nextInt(100);
+			break;
+		case 3:
+			rand_val1 = rand.nextInt(1000);
+			rand_val2 = rand.nextInt(1000);
+			break;
+		case 4:
+			rand_val1 = rand.nextInt(10000);
+			rand_val2 = rand.nextInt(10000);
+			break;
+		}
+	}
+	
+	public static void askQuestion() {
+		switch(problem) {
+		case 1:
+			System.out.println("What is " + getgenRandomNum1() + " plus " + getgenRandomNum2());
+			break;
+		case 2:
+			System.out.println("What is " + getgenRandomNum1() + " times " + getgenRandomNum2());
+			break;
+		case 3:
+			System.out.println("What is " + getgenRandomNum1() + " subtract " + getgenRandomNum2());
+			break;
+		case 4:
+			System.out.println("What is " + getgenRandomNum1() + " divide " + getgenRandomNum2() + " (round to nearest 10ths place)");
+			break;
+//		case 5:
+//			System.out.println("What is " + getgenRandomNum1() + " times " + getgenRandomNum2());
+//			break;
+		}
+		readResponse();
+	}
+
+	public static void readResponse() {
+		int answer = input.nextInt();
+		isAnserCorrect(answer);
+
+	}
+
+	public static void isAnserCorrect(int val) {
+		switch(problem) {
+		case 1:
+			if (val == (getgenRandomNum1() + getgenRandomNum2())) {
+				displayCorrectResponse();
+				correct++;
+			}
+			if (val != (getgenRandomNum1() + getgenRandomNum2())) {
+				displayInorrectResponse();
+				incorrect++;
+			}
+			break;
+		case 2:
+			if (val == (getgenRandomNum1() * getgenRandomNum2())) {
+				displayCorrectResponse();
+				correct++;
+			}
+			if (val != (getgenRandomNum1() * getgenRandomNum2())) {
+				displayInorrectResponse();
+				incorrect++;
+			}
+			break;
+		case 3:
+			if (val == (getgenRandomNum1() - getgenRandomNum2())) {
+				displayCorrectResponse();
+				correct++;
+			}
+			if (val != (getgenRandomNum1() - getgenRandomNum2())) {
+				displayInorrectResponse();
+				incorrect++;
+			}
+			break;
+		case 4:
+			if (val == (getgenRandomNum1() / getgenRandomNum2())) {
+				displayCorrectResponse();
+				correct++;
+			}
+			if (val != (getgenRandomNum1() / getgenRandomNum2())) {
+				displayInorrectResponse();
+				incorrect++;
+			}
+			break;
+//		case 5:
+//			if (val == (getgenRandomNum1() * getgenRandomNum2())) {
+//				displayCorrectResponse();
+//				correct++;
+//			}
+//			if (val != (getgenRandomNum1() * getgenRandomNum2())) {
+//				displayInorrectResponse();
+//				incorrect++;
+//			}
+//			break;
+		}
+		return;
+	}
+
+	public static void displayCorrectResponse() {
+		int rand_resp = rand.nextInt(4) + 1;
+		switch (rand_resp) {
+		case 1:
+			System.out.println("Very good!");
+			break;
+		case 2:
+			System.out.println("Excellent!");
+			break;
+		case 3:
+			System.out.println("Nice work!");
+			break;
+		case 4:
+			System.out.println("Keep up the good work");
+			break;
+		}
+	}
+
+	public static void displayInorrectResponse() {
+		int rand_resp = rand.nextInt(4) + 1;
+		switch (rand_resp) {
+		case 1:
+			System.out.println("No. Please try again.");
+			break;
+		case 2:
+			System.out.println("Wrong. Try once more.");
+			break;
+		case 3:
+			System.out.println("Don’t give up!");
+			break;
+		case 4:
+			System.out.println("No. Keep trying.");
+			break;
+		}
+	}
+
+	public static void displayCompletionMessage() {
+		double score =(double)correct/10 * 100;
+		System.out.println("You got " + correct + " right and " + incorrect + " wrong.");
+		System.out.printf("Your score is %.0f%%\n", score);
+		if (score >= 75) {
+			System.out.println("Congratulations, you are ready to go to the next level!");
+		}
+		else if (score < 75) {
+			System.out.println("Please ask your teacher for extra help.");
+		}
+		displayContiueMessage();
+	}
+	public static void displayContiueMessage() {
+		System.out.println("Would you like to solve a new problem set?\n"
+				+ "1 for yes\n"
+				+ "2 for no");
+		int decision = input.nextInt();
+		switch(decision) {
+		case 1:
+			quiz();
+		case 2:
+			System.exit(0);
+			
+		}
+	}
 }

@@ -8,6 +8,10 @@ A difficulty level of 1 shall limit random numbers to the range of 0-9, inclusiv
 A difficulty level of 2 shall limit random numbers to the range of 0-99, inclusive
 A difficulty level of 3 shall limit random numbers to the range of 0-999, inclusive
 A difficulty level of 4 shall limit random numbers to the range of 0-9999, inclusive
+
+
+
+
 The program shall ask the student to solve 10 different multiplication problems
 Multiplication problems shall contain two numbers sampled from a uniform random distribution with bounds determined by the problem difficulty
 The program shall display a random positive message if the student provides a correct response
@@ -33,20 +37,19 @@ Create a main method that runs your program by calling the "quiz" method
 public class CAI4 {
 	private static SecureRandom rand = new SecureRandom();
 	static Scanner input = new Scanner(System.in);
-	// Generate the random numbers between 0 - 9
 	private static int rand_val1;
 	private static int rand_val2;
-	static int correct = 0;
-	static int incorrect = 0;
-
+	private static int correct;
+	private static int incorrect;
+	private static int difficulty;
 	public static void main(String[] args) {
 		quiz();
 
 	}
 
-	private static void setgenRandomNum() {
-		rand_val1 = rand.nextInt(10);
-		rand_val2 = rand.nextInt(10);
+	private static void setCorrectIncorrect() {
+		correct = 0;
+		incorrect = 0;
 	}
 
 	private static int getgenRandomNum1() {
@@ -58,16 +61,48 @@ public class CAI4 {
 	}
 
 	public static void quiz() {
+		setCorrectIncorrect();
+		System.out.println("Choose a difficulty for multiplication:\n"
+				+ "1. Numbers between 0 - 9\n"
+				+ "2. Numbers between 0 - 99\n"
+				+ "3. Numbers between 0 - 999\n"
+				+ "4. Numbers between 0 - 9999");
+		
+		readDifficulty();
+		
 		for(int i = 1; i <= 10; i++) {
 		System.out.println("Question " + i);
-		
-		// Send the numbers to be used in the question
-		setgenRandomNum();
+		generateQuestionArgument();
 		askQuestion();
 		}
 		displayCompletionMessage();
 	}
+	
+	private static void readDifficulty() {
+		difficulty = input.nextInt();
+	}
 
+	private static void generateQuestionArgument(){
+		switch(difficulty) {
+		case 1:
+			rand_val1 = rand.nextInt(10);
+			rand_val2 = rand.nextInt(10);
+			break;
+		case 2:
+			rand_val1 = rand.nextInt(100);
+			rand_val2 = rand.nextInt(100);
+			break;
+		case 3:
+			rand_val1 = rand.nextInt(1000);
+			rand_val2 = rand.nextInt(1000);
+			break;
+		case 4:
+			rand_val1 = rand.nextInt(10000);
+			rand_val2 = rand.nextInt(10000);
+			break;
+		}
+	}
+	
 	public static void askQuestion() {
 		System.out.println("What is " + getgenRandomNum1() + " times " + getgenRandomNum2());
 		readResponse();
@@ -135,7 +170,7 @@ public class CAI4 {
 	}
 
 	public static void displayCompletionMessage() {
-		double score = (correct / 10) * 100;
+		double score =(double)correct/10 * 100;
 		System.out.println("You got " + correct + " right and " + incorrect + " wrong.");
 		System.out.printf("Your score is %.0f%%\n", score);
 		if (score >= 75) {
@@ -160,4 +195,3 @@ public class CAI4 {
 		}
 	}
 }
-
