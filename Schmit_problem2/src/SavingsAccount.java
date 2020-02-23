@@ -10,7 +10,7 @@ Provide a static method modifyInterestRate that sets the annualInterestRate to a
 public class SavingsAccount {
 	
 	public static double annualInterestRate;
-	private double savingsBalance; // NEED TO BE INSTANCE VARIABLE
+	private double savingsBalance;
 
 	public SavingsAccount(double balance) {
 		this.savingsBalance = balance;
